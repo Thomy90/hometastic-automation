@@ -5,14 +5,22 @@ services:
     restart: "always"
     networks:
       - "reverse-proxy"
-    ports:
-      - "8123:8123"
+    expose:
+      - "8123"
     volumes:
       - "./config:/config"
       - "/etc/localtime:/etc/localtime:ro"
     labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.homeassistant.rule=Host(`homeassistant.home.tastic`)"
       - "diun.enable=true"
       - "diun.include_tags=^\\d+\\.\\d+\\.\\d+$"
+      - "homepage.group=Smart Home & Automation"
+      - "homepage.name=Home Assistant"
+      - "homepage.icon=home-assistant.png"
+      - "homepage.href=https://homeassistant.home.tastic"
+      - "homepage.description=Smart Home Hub"
+
 
 networks:
   reverse-proxy:
