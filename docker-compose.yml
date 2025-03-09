@@ -1,0 +1,19 @@
+services:
+  homeassistant:
+    image: "${IMAGE}"
+    container_name: "homeassistant"
+    restart: "always"
+    networks:
+      - "reverse-proxy"
+    ports:
+      - "8123:8123"
+    volumes:
+      - "./config:/config"
+      - "/etc/localtime:/etc/localtime:ro"
+    labels:
+      - "diun.enable=true"
+      - "diun.include_tags=^\\d+\\.\\d+\\.\\d+$"
+
+networks:
+  reverse-proxy:
+    external: true
