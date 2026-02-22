@@ -7,9 +7,13 @@ services:
       - "reverse-proxy"
     expose:
       - "8123"
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
     volumes:
       - "./config:/config"
       - "/etc/localtime:/etc/localtime:ro"
+      - "/run/dbus:/run/dbus:ro"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homeassistant.rule=Host(`homeassistant.home.tastic`)"
@@ -20,7 +24,6 @@ services:
       - "homepage.icon=home-assistant.png"
       - "homepage.href=https://homeassistant.home.tastic"
       - "homepage.description=Smart Home Hub"
-
 
 networks:
   reverse-proxy:
